@@ -1,0 +1,28 @@
+﻿<Window x:Class="Laboratoire5._1.DetailsAttaqueView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Laboratoire5._1"
+        mc:Ignorable="d"
+        Title="Details de l'attaque" Height="166.782" Width="300">
+    <Grid>
+        <Label x:Name="lblNom" Content="Nom: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="80" HorizontalContentAlignment="Right"/>
+        <TextBox x:Name="txtNom" HorizontalAlignment="Left" Height="26" Margin="95,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="189" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblDommage" Content="Dommage: " HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="80" HorizontalContentAlignment="Right"/>
+        <TextBox x:Name="txtDommage" HorizontalAlignment="Left" Height="26" Margin="95,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" VerticalContentAlignment="Center"/>
+        <Label x:Name="lblMana" Content="Mana: " HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="79" HorizontalContentAlignment="Right"/>
+        <TextBox x:Name="txtMana" HorizontalAlignment="Left" Height="26" Margin="95,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" VerticalContentAlignment="Center"/>
+        <Button x:Name="btnAnnuler" Content="Annuler" HorizontalAlignment="Left" Margin="208,103,0,0" VerticalAlignment="Top" Width="75" Height="24"/>
+        <Button x:Name="btnSauvgarder" Content="Sauvgarder" HorizontalAlignment="Left" Margin="128,105,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+    </Grid>
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+</Window>

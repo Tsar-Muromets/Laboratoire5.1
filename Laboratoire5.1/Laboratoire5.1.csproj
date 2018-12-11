@@ -49,6 +49,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -67,15 +69,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\Attaque.cs" />
-    <Compile Include="Models\KeyAttribute.cs" />
-    <Compile Include="Models\Labo5DbContext.cs" />
-    <Compile Include="Models\Partie.cs" />
-    <Compile Include="Models\Personnage.cs" />
-    <Compile Include="Models\PersonnageAttaque.cs" />
-    <Compile Include="Models\PersonnagePartie.cs" />
-    <Compile Include="Models\Statistique.cs" />
+    <Compile Include="Attaque.cs" />
+    <Compile Include="Labo5DbContext.cs" />
+    <Compile Include="Partie.cs" />
+    <Compile Include="Personnage.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="Statistique.cs" />
     <Compile Include="ViewsModels\GameAttaque.cs" />
     <Compile Include="ViewsModels\PersonnageVM.cs" />
     <Compile Include="Views\DetailsAttaqueView.xaml.cs">
@@ -155,10 +154,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="battleground3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

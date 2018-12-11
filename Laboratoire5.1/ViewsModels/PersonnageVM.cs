@@ -14,12 +14,12 @@ namespace Laboratoire5._1
     class PersonnageVM : INotifyPropertyChanged
     {
         private Personnage personnageModel;
-        private string nom;
-        private List<PersonnageType> allTypes;
-        private int pointsDeVie;
-        private int pointDeMana;
-        private BitmapImage image;
-        private ObservableCollection<GameAttaque> listAttaque;  
+        //private string nom;
+        //private List<PersonnageType> allTypes;
+        //private int pointsDeVie;
+        //private int pointDeMana;
+        //private BitmapImage image;
+        //private ObservableCollection<GameAttaque> listAttaque;  
 
         private Dictionary<string, string> errorList;
 
@@ -39,11 +39,6 @@ namespace Laboratoire5._1
             errorList["Image"] = "";
 
             personnageModel = new Personnage();
-
-            //using ()
-            //{
-            //    AllTypes = Labo5DbContext..ToList();
-            //}
         }
 
         public PersonnageVM(Personnage p)
@@ -56,12 +51,6 @@ namespace Laboratoire5._1
 
             personnageModel = p;
 
-            ListAttaque = new ObservableCollection<GameAttaque>();
-            //foreach(Attaque a in personnageModel.)
-            //{
-            //    GameAttaque gA = new GameAttaque(a.Nom, a.Degats, a.Mana);
-            //    ListAttaque.Add(gA);
-            //}
         }
 
         public string Nom
@@ -90,25 +79,13 @@ namespace Laboratoire5._1
             }
         }
 
-        public List<PersonnageType> AllTypes
-        {
-            get
-            {
-                return allTypes;
-            }
-
-            set
-            {
-                allTypes = value;
-            }
-        }
-
-        public int TypeSelection
+        public int Type
         {
             get
             {
                 return personnageModel.Type;
             }
+
             set
             {
                 personnageModel.Type = value;
@@ -116,7 +93,7 @@ namespace Laboratoire5._1
             }
         }
 
-        public int PointsDeVie
+        public int VieTotal
         {
             get
             {
@@ -138,7 +115,7 @@ namespace Laboratoire5._1
             }
         }
 
-        public int PointDeMana
+        public int ManaTotal
         {
             get
             {
@@ -160,7 +137,7 @@ namespace Laboratoire5._1
             }
         }
 
-        public string Image
+        public string ImagePath
         {
             get
             {
@@ -179,19 +156,6 @@ namespace Laboratoire5._1
                     errorList["Image"] = "";
                 }
                 NotifyPropertyChanged();
-            }
-        }
-
-        internal ObservableCollection<GameAttaque> ListAttaque
-        {
-            get
-            {
-                return listAttaque;
-            }
-
-            set
-            {
-                listAttaque = value;
             }
         }
     }

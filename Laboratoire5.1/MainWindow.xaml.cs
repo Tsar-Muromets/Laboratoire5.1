@@ -27,8 +27,8 @@ namespace Laboratoire5._1
 
         private void PersonnageMI_Click(object sender, RoutedEventArgs e)
         {
-            GestionPersonnagesView gestionPersonnagesView = new GestionPersonnagesView();
-            gestionPersonnagesView.ShowDialog();
+            GestionPersonnagesView gestionPersonnageView = new GestionPersonnagesView();
+            gestionPersonnageView.ShowDialog();
         }
 
         private void AttaqueMI_Click(object sender, RoutedEventArgs e)

@@ -77,8 +77,10 @@
     <Compile Include="ViewsModels\PartieInfoVM.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Models\Statistique.cs" />
-    <Compile Include="ViewsModels\GameAttaque.cs" />
-    <Compile Include="ViewsModels\PersonnageVM.cs" />
+    <Compile Include="ViewsModels\AttaqueInfoVM.cs" />
+    <Compile Include="ViewsModels\PersonnageGestionVM.cs" />
+    <Compile Include="ViewsModels\PersonnageInfoVM.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="Views\DetailsAttaqueView.xaml.cs">
       <DependentUpon>DetailsAttaqueView.xaml</DependentUpon>
     </Compile>

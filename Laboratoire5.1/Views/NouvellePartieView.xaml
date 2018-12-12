@@ -8,16 +8,16 @@
         Title="Partie" Height="360" Width="600">
     <Grid>
         <Label x:Name="lblNom" Content="Nom: " HorizontalAlignment="Left" Margin="244,10,0,0" VerticalAlignment="Top" Width="102" HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="txtNom" HorizontalAlignment="Left" Height="26" Margin="351,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtNom" IsReadOnly="True" Text="{Binding Nom}" HorizontalAlignment="Left" Height="26" Margin="351,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" VerticalContentAlignment="Center"/>
         <Label x:Name="lblType" Content="Type: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,41,0,0" Width="102" HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="txtType" HorizontalAlignment="Left" Height="26" Margin="351,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtType" IsReadOnly="True" Text="{Binding Type}" HorizontalAlignment="Left" Height="26" Margin="351,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" VerticalContentAlignment="Center"/>
         <Label x:Name="lblVie" Content="Vie: " HorizontalAlignment="Left" Margin="244,72,0,0" VerticalAlignment="Top" Width="102" HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="txtVie" HorizontalAlignment="Left" Height="26" Margin="351,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtVie" IsReadOnly="True" Text="{Binding Vie}" HorizontalAlignment="Left" Height="26" Margin="351,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" VerticalContentAlignment="Center"/>
         <Label x:Name="lblMana" Content="Mana: " HorizontalAlignment="Left" Margin="244,103,0,0" VerticalAlignment="Top" Width="102" HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="txtMana" HorizontalAlignment="Left" Height="26" Margin="351,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtMana" IsReadOnly="True" Text="{Binding Mana}" HorizontalAlignment="Left" Height="26" Margin="351,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" VerticalContentAlignment="Center"/>
         <Image x:Name="image" HorizontalAlignment="Left" Height="119" Margin="10,10,0,0" VerticalAlignment="Top" Width="119"/>
-        <Button x:Name="btnSuivant" Content="Suivant" HorizontalAlignment="Left" Margin="508,134,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="btnPrecedent" Content="Precedent" HorizontalAlignment="Left" Margin="428,134,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnSuivant" Content="Suivant" Command="{Binding SuivantCommand}" HorizontalAlignment="Left" Margin="508,134,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnPrecedent" Content="Precedent" Command="{Binding PrecedentCommand}" HorizontalAlignment="Left" Margin="428,134,0,0" VerticalAlignment="Top" Width="75"/>
         <DataGrid Margin="0,158,-0.4,36.4">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nom" Width="1*"/>
@@ -27,7 +27,7 @@
                 <DataGridTextColumn Header="Selectionne" Width="1*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnAnnuler" Content="Annuler" HorizontalAlignment="Left" Margin="509,301,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="btnJouer" Content="Jouer" HorizontalAlignment="Left" Margin="428,301,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnAnnuler" Content="Annuler" HorizontalAlignment="Left" Margin="509,301,0,0" VerticalAlignment="Top" Width="75" Click="Annuler_Click"/>
+        <Button x:Name="btnJouer" Content="Jouer" HorizontalAlignment="Left" Margin="428,301,0,0" VerticalAlignment="Top" Width="75" />
     </Grid>
 </Window>

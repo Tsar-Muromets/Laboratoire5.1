@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Laboratoire5._1
 {
-    class GameAttaque: INotifyPropertyChanged
+    class AttaqueInfoVM: INotifyPropertyChanged
     {
         private Attaque attaqueModel;
         private string nom;
@@ -24,7 +24,7 @@ namespace Laboratoire5._1
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public GameAttaque(string n, int d, int m)
+        public AttaqueInfoVM(string n, int d, int m)
         {
             Nom = n;
             Dommage = d;

@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 
 namespace Laboratoire5._1
 {
-    class PersonnageVM : INotifyPropertyChanged
+    public class PersonnageInfoVM : INotifyPropertyChanged
     {
         private Personnage personnageModel;
         //private string nom;
@@ -22,6 +22,7 @@ namespace Laboratoire5._1
         //private ObservableCollection<GameAttaque> listAttaque;  
 
         private Dictionary<string, string> errorList;
+        private string nom;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -30,7 +31,7 @@ namespace Laboratoire5._1
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public PersonnageVM()
+        public PersonnageInfoVM()
         {
             errorList = new Dictionary<string, string>();
             errorList["Nom"] = "";
@@ -39,9 +40,11 @@ namespace Laboratoire5._1
             errorList["Image"] = "";
 
             personnageModel = new Personnage();
+
+
         }
 
-        public PersonnageVM(Personnage p)
+        public PersonnageInfoVM(Personnage p)
         {
             errorList = new Dictionary<string, string>();
             errorList["Nom"] = "";
@@ -67,7 +70,7 @@ namespace Laboratoire5._1
                 {
                     errorList["Nom"] = "Le Nom ne doit pas etre vide";
                 }
-                else if(value.Count() <= 50)
+                else if (value.Count() <= 50)
                 {
                     errorList["Nom"] = "Le nom doit etre plus court que 50 character";
                 }
@@ -75,6 +78,7 @@ namespace Laboratoire5._1
                 {
                     errorList["Nom"] = "";
                 }
+
                 NotifyPropertyChanged();
             }
         }

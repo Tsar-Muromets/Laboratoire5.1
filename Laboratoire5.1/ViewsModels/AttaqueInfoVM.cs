@@ -21,6 +21,7 @@ namespace Laboratoire5._1
         public event EventHandler DemandeFermeture;
 
         private RelayCommand sauvegarderCommand;
+        private RelayCommand ajouterAttaqueCommand;
 
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -157,6 +158,8 @@ namespace Laboratoire5._1
 
             DemandeFermeture?.Invoke(this, new EventArgs());
         }
+
+        
     }
     
 }

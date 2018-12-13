@@ -65,64 +65,64 @@ namespace Laboratoire5._1
             }
         }
 
-        public ICommand CreerPersonnage
-        {
-            get
-            {
-                if (creerPersonnageCommand == null)
-                {
-                    creerPersonnageCommand = new RelayCommand(Creer, CanCreer);
-                }
+        //public ICommand CreerPersonnage
+        //{
+        //    get
+        //    {
+        //        if (creerPersonnageCommand == null)
+        //        {
+        //            creerPersonnageCommand = new RelayCommand(Creer, CanCreer);
+        //        }
 
-                return creerPersonnageCommand;
-            }
-        }
+        //        return creerPersonnageCommand;
+        //    }
+        //}
 
-        private bool CanCreer(object o)
-        {
-            foreach (KeyValuePair<string, string> error in errorList)
-            {
-                if (error.Value != "")
-                {
-                    return false;
-                }
-            }
+        //private bool CanCreer(object o)
+        //{
+        //    foreach (KeyValuePair<string, string> error in errorList)
+        //    {
+        //        if (error.Value != "")
+        //        {
+        //            return false;
+        //        }
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        private void Creer(object o)
-        {
-            DetailsAttaqueView maisonView = new DetailsAttaqueView();
+        //private void Creer(object o)
+        //{
+        //    DetailsAttaqueView maisonView = new DetailsAttaqueView();
 
-            if (maisonView.ShowDialog() == true)
-            {
-                MessageBox.Show("VRAI!!");
-                PersonnageInfoVM viewModel = (PersonnageInfoVM)maisonView.DataContext;
+        //    if (maisonView.ShowDialog() == true)
+        //    {
+        //        MessageBox.Show("VRAI!!");
+        //        PersonnageInfoVM viewModel = (PersonnageInfoVM)maisonView.DataContext;
 
-            }
-            else
-            {
-                MessageBox.Show("FAUX!!");
-            }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("FAUX!!");
+        //    }
 
-            //using (Labo5DbContext dbContext = new Labo5DbContext())
-            //{
-            //    //si egal 0, nouvelle maison
-            //    if (personnageModel.PersonnageID == 0)
-            //    {
-            //        dbContext.Entry(personnageModel).State = EntityState.Added;
+        //    //using (Labo5DbContext dbContext = new Labo5DbContext())
+        //    //{
+        //    //    //si egal 0, nouvelle maison
+        //    //    if (personnageModel.PersonnageID == 0)
+        //    //    {
+        //    //        dbContext.Entry(personnageModel).State = EntityState.Added;
 
-            //    }
-            //    else //si different de 0, maison existante que je modifie
-            //    {
-            //        dbContext.Entry(personnageModel).State = EntityState.Modified;
-            //    }
+        //    //    }
+        //    //    else //si different de 0, maison existante que je modifie
+        //    //    {
+        //    //        dbContext.Entry(personnageModel).State = EntityState.Modified;
+        //    //    }
 
-            //    dbContext.SaveChanges();
-            //}
+        //    //    dbContext.SaveChanges();
+        //    //}
 
-            DemandeFermeture?.Invoke(this, new EventArgs());
-        }
+        //    DemandeFermeture?.Invoke(this, new EventArgs());
+        //}
     }
 }

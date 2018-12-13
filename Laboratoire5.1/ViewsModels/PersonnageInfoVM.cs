@@ -26,6 +26,7 @@ namespace Laboratoire5._1
         private Dictionary<string, string> errorList;
 
         private List<Attaque> allAttaques;
+        private Attaque selectedAttaque;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -201,6 +202,18 @@ namespace Laboratoire5._1
             }
         }
 
+        public Attaque SelectedAttaque
+        {
+            get
+            {
+                return selectedAttaque;
+            }
+            set
+            {
+                selectedAttaque = value;
+            }
+        }
+
         public ICommand SauvegarderCommand
         {
             get
@@ -247,6 +260,38 @@ namespace Laboratoire5._1
             }
 
             DemandeFermeture?.Invoke(this, new EventArgs());
+        }
+        public ICommand AjouterAttaqueCommand
+        {
+            get
+            {
+                if (sauvegarderCommand == null)
+                {
+                    sauvegarderCommand = new RelayCommand(AjouterAttaque, CanAjouterAttaque);
+                }
+
+                return sauvegarderCommand;
+            }
+        }
+
+        private bool CanAjouterAttaque(object o)
+        {
+            foreach (KeyValuePair<string, string> error in errorList)
+            {
+                if (error.Value != "")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void AjouterAttaque(object o)
+        {
+
+            Attaques.Add(selectedAttaque);
+            NotifyPropertyChanged("Attaques");
         }
     }
 }

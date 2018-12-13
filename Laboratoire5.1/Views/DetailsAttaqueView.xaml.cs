@@ -22,6 +22,29 @@ namespace Laboratoire5._1
         public DetailsAttaqueView()
         {
             InitializeComponent();
+
+            AttaqueInfoVM attaqueInfoVM = new AttaqueInfoVM();
+            this.DataContext = attaqueInfoVM;
+            attaqueInfoVM.DemandeFermeture += Fermeture;
+        }
+
+        public DetailsAttaqueView(AttaqueInfoVM aVM)
+        {
+            InitializeComponent();
+
+            this.DataContext = aVM;
+            aVM.DemandeFermeture += Fermeture;
+        }
+
+        private void Annuler_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
+        }
+        private void Fermeture(object o, EventArgs e)
+        {
+            this.DialogResult = true;
+            this.Close();
         }
     }
 }

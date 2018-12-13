@@ -22,6 +22,19 @@ namespace Laboratoire5._1
         public GestionPersonnagesView()
         {
             InitializeComponent();
+
+            PersonnageGestionVM personnageGestionVM = new PersonnageGestionVM();
+            this.DataContext = personnageGestionVM;
+            //personnageInfoVM.Dema
+        }
+
+        public GestionPersonnagesView(PersonnageGestionVM pIVM)
+        {
+            InitializeComponent();
+
+            PersonnageGestionVM personnageGestionVM = pIVM;
+            this.DataContext = personnageGestionVM;
+            //personnageInfoVM.Dema
         }
 
         private void Modifier_Click(object sender, RoutedEventArgs e)
@@ -34,6 +47,25 @@ namespace Laboratoire5._1
         {
             DetailsPersonnageView detailsPersonnageView = new DetailsPersonnageView();
             detailsPersonnageView.ShowDialog();
+        }
+
+        private void Fermeture(object o, EventArgs e)
+        {
+            this.DialogResult = true;
+            this.Close();
+        }
+
+        private void PersoStats_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(dgPersoStats.SelectedItems == null)
+            {
+                btnModifier.IsEnabled = false;
+                btnSupprimer.IsEnabled = false;
+            }else
+            {
+                btnModifier.IsEnabled = true;
+                btnSupprimer.IsEnabled = true;
+            }
         }
     }
 }

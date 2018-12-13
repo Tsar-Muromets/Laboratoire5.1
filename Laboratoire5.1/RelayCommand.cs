@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Lab5
+namespace Laboratoire5._1
 {
     class RelayCommand: ICommand
     {

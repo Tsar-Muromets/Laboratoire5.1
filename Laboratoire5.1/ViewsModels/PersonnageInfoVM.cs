@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Labo5GameLib;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Data.Entity;
+
 
 namespace Laboratoire5._1
 {
-    class PersonnageVM : INotifyPropertyChanged
+    public class PersonnageInfoVM : INotifyPropertyChanged
     {
         private Personnage personnageModel;
         //private string nom;
@@ -23,14 +26,22 @@ namespace Laboratoire5._1
 
         private Dictionary<string, string> errorList;
 
+
+        private List<Attaque> allAttaques;
+        private Attaque selectedAttaque;
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public event EventHandler DemandeFermeture;
+
+        private RelayCommand sauvegarderCommand;
 
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public PersonnageVM()
+        public PersonnageInfoVM()
         {
             errorList = new Dictionary<string, string>();
             errorList["Nom"] = "";
@@ -39,9 +50,16 @@ namespace Laboratoire5._1
             errorList["Image"] = "";
 
             personnageModel = new Personnage();
+
+
+            using (Labo5DbContext db = new Labo5DbContext())
+            {
+                AllAttaques = db.Attaques.ToList();
+            }
+
         }
 
-        public PersonnageVM(Personnage p)
+        public PersonnageInfoVM(Personnage p)
         {
             errorList = new Dictionary<string, string>();
             errorList["Nom"] = "";
@@ -51,7 +69,13 @@ namespace Laboratoire5._1
 
             personnageModel = p;
 
+        #region Variables
+            using (Labo5DbContext db = new Labo5DbContext())
+            {
+                AllAttaques = db.Attaques.ToList();
+            }
         }
+
 
         public string Nom
         {
@@ -67,7 +91,8 @@ namespace Laboratoire5._1
                 {
                     errorList["Nom"] = "Le Nom ne doit pas etre vide";
                 }
-                else if(value.Count() <= 50)
+
+                else if (value.Count() >= 50)
                 {
                     errorList["Nom"] = "Le nom doit etre plus court que 50 character";
                 }
@@ -75,6 +100,7 @@ namespace Laboratoire5._1
                 {
                     errorList["Nom"] = "";
                 }
+
                 NotifyPropertyChanged();
             }
         }
@@ -157,6 +183,124 @@ namespace Laboratoire5._1
                 }
                 NotifyPropertyChanged();
             }
+        }
+        #endregion
+
+
+        public ICollection<Attaque> Attaques
+        {
+            get
+            {
+                return personnageModel.Attaques;
+            }
+            set
+            {
+                personnageModel.Attaques = value;
+            }
+        }
+
+        public List<Attaque> AllAttaques
+        {
+            get
+            {
+                return allAttaques;
+            }
+            set
+            {
+                allAttaques = value;
+            }
+        }
+
+        public Attaque SelectedAttaque
+        {
+            get
+            {
+                return selectedAttaque;
+            }
+            set
+            {
+                selectedAttaque = value;
+            }
+        }
+
+        public ICommand SauvegarderCommand
+        {
+            get
+            {
+                if (sauvegarderCommand == null)
+                {
+                    sauvegarderCommand = new RelayCommand(Sauvegarder, CanSauvegarder);
+                }
+
+
+                return sauvegarderCommand;
+            }
+        }
+        private bool CanSauvegarder(object o)
+        {
+            foreach (KeyValuePair<string, string> error in errorList)
+            {
+                if (error.Value != "")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void Sauvegarder(object o)
+        {
+            Console.WriteLine("Enregistrer dans la DB.");
+
+            using (Labo5DbContext db = new Labo5DbContext())
+            {
+                //si egal 0, nouvelle maison
+                if (personnageModel.PersonnageID == 0)
+                {
+                    db.Entry(personnageModel).State = EntityState.Added;
+                }
+                else //si different de 0, maison existante que je modifie
+                {
+                    db.Entry(personnageModel).State = EntityState.Modified;
+                }
+
+                db.SaveChanges();
+            }
+
+            DemandeFermeture?.Invoke(this, new EventArgs());
+        }
+        public ICommand AjouterAttaqueCommand
+        {
+            get
+            {
+                if (sauvegarderCommand == null)
+                {
+                    sauvegarderCommand = new RelayCommand(AjouterAttaque, CanAjouterAttaque);
+                }
+
+                return sauvegarderCommand;
+            }
+        }
+
+        private bool CanAjouterAttaque(object o)
+        {
+            foreach (KeyValuePair<string, string> error in errorList)
+            {
+                if (error.Value != "")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void AjouterAttaque(object o)
+        {
+
+            Attaques.Add(selectedAttaque);
+            NotifyPropertyChanged("Attaques");
         }
     }
 }

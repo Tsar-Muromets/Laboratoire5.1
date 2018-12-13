@@ -14,7 +14,8 @@
             </Grid.RowDefinitions>
             <Menu VerticalAlignment="Top" Margin="0,0,-0.4,0">
                 <MenuItem Header="Fichier">
-                    <MenuItem Header="Nouvelle partie" Click="NouvellePartieMI_Click"/>
+                    <MenuItem Header="Nouvelle partie" Click="NouvellePartie_Click"/>
+                    <MenuItem Header="Créer une attaque" Click="TestDetailsDmg_Click"/>
                     <MenuItem Header="Arreter partie"/>
                     <MenuItem Header="Quitter"/>
                 </MenuItem>

@@ -1,34 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Windows.Input;
+
 namespace Laboratoire5._1
 {
-    class GameAttaque: INotifyPropertyChanged
+    public class AttaqueInfoVM: INotifyPropertyChanged
     {
         private Attaque attaqueModel;
-        private string nom;
-        private int dommage;
-        private int mana;
 
         private Dictionary<string, string> errorList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public event EventHandler DemandeFermeture;
+
+        private RelayCommand sauvegarderCommand;
+        private RelayCommand ajouterAttaqueCommand;
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public GameAttaque(string n, int d, int m)
+        public AttaqueInfoVM()
         {
-            Nom = n;
-            Dommage = d;
-            Mana = m; 
+            errorList = new Dictionary<string, string>();
+            errorList["Adresse"] = "";
+
+            attaqueModel = new Attaque();
+        }
+
+        public AttaqueInfoVM(Attaque a)
+        {
+            errorList = new Dictionary<string, string>();
+            errorList["Adresse"] = "";
+
+            attaqueModel = a;
         }
 
         public string Nom
@@ -41,11 +54,7 @@ namespace Laboratoire5._1
             set
             {
                 attaqueModel.Nom = value;
-                if (string.IsNullOrEmpty(value))
-                {
-                    errorList["Nom"] = "Le nom ne doit pas etre vide";
-                }
-                else if (value.Count() <= 50)
+                if (value.Count() >= 50)
                 {
                     errorList["Nom"] = "Le nom doit etre plus court que 50 character";
                 }
@@ -100,5 +109,57 @@ namespace Laboratoire5._1
                 NotifyPropertyChanged();
             }
         }
+
+        public ICommand SauvegarderCommand
+        {
+            get
+            {
+                if (sauvegarderCommand == null)
+                {
+                    sauvegarderCommand = new RelayCommand(Sauvegarder, CanSauvegarder);
+                }
+
+                return sauvegarderCommand;
+            }
+        }
+
+        private bool CanSauvegarder(object o)
+        {
+            foreach (KeyValuePair<string, string> error in errorList)
+            {
+                if (error.Value != "")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void Sauvegarder(object o)
+        {
+            Console.WriteLine("Enregistrer dans la DB.");
+
+            using (Labo5DbContext dbContext = new Labo5DbContext())
+            {
+                //si egal 0, nouvelle maison
+                if (attaqueModel.AttaqueID == 0)
+                {
+
+                    dbContext.Entry(attaqueModel).State = EntityState.Added;
+                }
+                else //si different de 0, maison existante que je modifie
+                {
+                    dbContext.Entry(attaqueModel).State = EntityState.Modified;
+                }
+
+                dbContext.SaveChanges();
+            }
+
+            DemandeFermeture?.Invoke(this, new EventArgs());
+        }
+
+        
     }
+    
 }

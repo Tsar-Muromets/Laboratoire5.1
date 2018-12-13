@@ -22,6 +22,16 @@ namespace Laboratoire5._1
         public NouvellePartieView()
         {
             InitializeComponent();
+
+            PartieInfoVM partieInfoVM = new PartieInfoVM();
+            this.DataContext = partieInfoVM;
+            //partieInfoVM.DemandeFermeture += Fermeture;
+        }
+
+        private void Annuler_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
         }
     }
 }

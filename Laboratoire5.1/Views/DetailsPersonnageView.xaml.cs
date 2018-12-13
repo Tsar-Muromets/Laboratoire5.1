@@ -47,6 +47,7 @@ namespace Laboratoire5._1
         private void Fermeture(object o, EventArgs e)
         {
             this.DialogResult = true;
+            //NotifyPropertyChanged();
             this.Close();
         }
         private void LeftClick_PreviewMouseDown(object sender, MouseButtonEventArgs e)

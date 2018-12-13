@@ -56,6 +56,7 @@ namespace Laboratoire5._1
             }
             else
             {
+                
                 //dgPersoStats.Items.Refresh();
                 MessageBox.Show("FAUX!!");
             }

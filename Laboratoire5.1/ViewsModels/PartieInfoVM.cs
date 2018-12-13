@@ -44,11 +44,11 @@ namespace Laboratoire5._1
 
             partieModel = p;
 
-            using(Labo5DbContext db = new Labo5DbContext())
+            using (Labo5DbContext db = new Labo5DbContext())
             {
                 partieModel.Personnages = db.Personnages.ToList();
             }
-            
+
         }
 
         public ICollection<Personnage> Personnages

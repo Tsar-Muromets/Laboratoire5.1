@@ -67,12 +67,6 @@ namespace Laboratoire5._1
             this.Close();
         }
 
-        private void Fermeture(object o, EventArgs e)
-        {
-            this.DialogResult = true;
-            this.Close();
-        }
-
         private void PersoStats_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(dgPersoStats.SelectedItems == null)

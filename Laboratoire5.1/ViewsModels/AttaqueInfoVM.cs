@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace Laboratoire5._1
 {
-    public class AttaqueInfoVM: INotifyPropertyChanged
+    public class AttaqueInfoVM : INotifyPropertyChanged
     {
         private Attaque attaqueModel;
 
@@ -45,7 +45,7 @@ namespace Laboratoire5._1
 
             attaqueModel = a;
         }
-        
+
         public string Nom
         {
             get
@@ -161,7 +161,7 @@ namespace Laboratoire5._1
             DemandeFermeture?.Invoke(this, new EventArgs());
         }
 
-        
+
     }
-    
+
 }

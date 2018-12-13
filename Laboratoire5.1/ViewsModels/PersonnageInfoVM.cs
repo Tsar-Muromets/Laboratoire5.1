@@ -27,7 +27,7 @@ namespace Laboratoire5._1
         private Dictionary<string, string> errorList;
 
 
-        private List<Attaque> allAttaques;
+        private ObservableCollection<Attaque> allAttaques;
         private Attaque selectedAttaque;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -35,6 +35,9 @@ namespace Laboratoire5._1
         public event EventHandler DemandeFermeture;
 
         private RelayCommand sauvegarderCommand;
+        private RelayCommand ajouterAttaqueCommand;
+        private RelayCommand supprimerAttaqueCommand;
+
 
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -50,11 +53,12 @@ namespace Laboratoire5._1
             errorList["Image"] = "";
 
             personnageModel = new Personnage();
-
+            
 
             using (Labo5DbContext db = new Labo5DbContext())
             {
-                AllAttaques = db.Attaques.ToList();
+                AllAttaques = new ObservableCollection<Attaque>(db.Attaques.ToList());
+                SelectedAttaque = db.Attaques.FirstOrDefault();
             }
 
         }
@@ -72,7 +76,8 @@ namespace Laboratoire5._1
         #region Variables
             using (Labo5DbContext db = new Labo5DbContext())
             {
-                AllAttaques = db.Attaques.ToList();
+                AllAttaques = new ObservableCollection<Attaque>(db.Attaques.ToList());
+                SelectedAttaque = db.Attaques.FirstOrDefault(); SelectedAttaque = db.Attaques.FirstOrDefault();
             }
         }
 
@@ -115,6 +120,20 @@ namespace Laboratoire5._1
             set
             {
                 personnageModel.Type = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public PersonnageType SelectedType
+        {
+            get
+            {
+                return (PersonnageType)personnageModel.Type;
+            }
+
+            set
+            {
+                personnageModel.Type = (int)value;
                 NotifyPropertyChanged();
             }
         }
@@ -187,7 +206,7 @@ namespace Laboratoire5._1
         #endregion
 
 
-        public ICollection<Attaque> Attaques
+        public ObservableCollection<Attaque> Attaques
         {
             get
             {
@@ -199,7 +218,7 @@ namespace Laboratoire5._1
             }
         }
 
-        public List<Attaque> AllAttaques
+        public ObservableCollection<Attaque> AllAttaques
         {
             get
             {
@@ -274,12 +293,12 @@ namespace Laboratoire5._1
         {
             get
             {
-                if (sauvegarderCommand == null)
+                if (ajouterAttaqueCommand == null)
                 {
-                    sauvegarderCommand = new RelayCommand(AjouterAttaque, CanAjouterAttaque);
+                    ajouterAttaqueCommand = new RelayCommand(AjouterAttaque, CanAjouterAttaque);
                 }
 
-                return sauvegarderCommand;
+                return ajouterAttaqueCommand;
             }
         }
 
@@ -300,7 +319,40 @@ namespace Laboratoire5._1
         {
 
             Attaques.Add(selectedAttaque);
-            NotifyPropertyChanged("Attaques");
+            //NotifyPropertyChanged("Attaques");
+        }
+
+        public ICommand SupprimerAttaqueCommand
+        {
+            get
+            {
+                if (supprimerAttaqueCommand == null)
+                {
+                    supprimerAttaqueCommand = new RelayCommand(SupprimerAttaque, CanSupprimerAttaque);
+                }
+
+                return supprimerAttaqueCommand;
+            }
+        }
+
+        private bool CanSupprimerAttaque(object o)
+        {
+            foreach (KeyValuePair<string, string> error in errorList)
+            {
+                if (error.Value != "")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void SupprimerAttaque(object o)
+        {
+
+            Attaques.Remove(selectedAttaque);
+            //NotifyPropertyChanged("Attaques");
         }
     }
 }

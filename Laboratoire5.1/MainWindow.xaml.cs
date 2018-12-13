@@ -27,8 +27,20 @@ namespace Laboratoire5._1
 
         private void PersonnageMI_Click(object sender, RoutedEventArgs e)
         {
+            //GestionPersonnagesView gestionPersonnageView = new GestionPersonnagesView();
+            //gestionPersonnageView.ShowDialog();
+
             GestionPersonnagesView gestionPersonnageView = new GestionPersonnagesView();
-            gestionPersonnageView.ShowDialog();
+
+            if (gestionPersonnageView.ShowDialog() == true)
+            {
+                MessageBox.Show("VRAI!!");
+                //VM viewModel = (PartieInfoVM)gestionPersonnageView.DataContext;
+            }
+            else
+            {
+                MessageBox.Show("FAUX!!");
+            }
         }
 
         private void AttaqueMI_Click(object sender, RoutedEventArgs e)
@@ -61,7 +73,7 @@ namespace Laboratoire5._1
         private void TestDetailsDmg_Click(object sender, RoutedEventArgs e)
         {
             DetailsAttaqueView detailsAttaqueView = new DetailsAttaqueView();
-
+            
             if (detailsAttaqueView.ShowDialog() == true)
             {
                 MessageBox.Show("VRAI!!");

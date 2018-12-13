@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,54 +16,81 @@ namespace Laboratoire5._1
     {
         private Personnage personnageModel;
 
-        private List<Personnage> allPersonnages;
+        private ObservableCollection<Personnage> allPersonnages;
+        private Personnage selectedPersonnage;
 
         private Dictionary<string, string> errorList;
 
-        private ObservableCollection<PersonnageInfoVM> personnageInfoList;
-
         private RelayCommand creerPersonnageCommand;
+        private RelayCommand supprimerPersonnageCommand;
+        private RelayCommand modifierPersonnageCommand;
 
         public event EventHandler DemandeFermeture;
 
-        public ObservableCollection<PersonnageInfoVM> PersonnageInfoList
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public PersonnageGestionVM()
+        {
+            errorList = new Dictionary<string, string>();
+            errorList["SelectedPersonnage"] = "";
+            errorList["AllPersonnages"] = "";
+
+            using (Labo5DbContext db = new Labo5DbContext())
+            {
+                allPersonnages = new ObservableCollection<Personnage>(db.Personnages.ToList());
+            }
+            //foreach (Personnage pStats in allPersonnages)
+            //{
+            //    PersonnageInfoVM pIVM = new PersonnageInfoVM(pStats);
+            //    PersonnageInfoList.Add(pIVM);
+
+            //}
+        }
+
+        public Personnage SelectedPersonnage
         {
             get
             {
-                return personnageInfoList;
+                return selectedPersonnage;
             }
-
             set
             {
-                personnageInfoList = value;
+                selectedPersonnage = value;
+                if(selectedPersonnage == null)
+                {
+                    errorList["SelectedPersonnage"] = "Aucun personnage de sélectionné";
+                }
+                else
+                {
+                    errorList["SelectedPersonnage"] = "";
+                }
+                NotifyPropertyChanged();
             }
         }
 
-        public List<Personnage> AllPersonnages
+        public ObservableCollection<Personnage> AllPersonnages
         {
             get
             {
                 return allPersonnages;
             }
-
             set
             {
                 allPersonnages = value;
-            }
-        }
-
-        public PersonnageGestionVM()
-        {
-            PersonnageInfoList = new ObservableCollection<PersonnageInfoVM>();
-            using (Labo5DbContext db = new Labo5DbContext())
-            {
-                allPersonnages = db.Personnages.ToList();
-            }
-            foreach (Personnage pStats in allPersonnages)
-            {
-                PersonnageInfoVM pIVM = new PersonnageInfoVM(pStats);
-                PersonnageInfoList.Add(pIVM);
-
+                if(allPersonnages == null)
+                {
+                    errorList["AllPersonnages"] = "Vous devez avoir des personnages";
+                }
+                else
+                {
+                    errorList["AllPersonnages"] = "";
+                }
+                NotifyPropertyChanged();
             }
         }
 
@@ -124,5 +153,93 @@ namespace Laboratoire5._1
 
         //    DemandeFermeture?.Invoke(this, new EventArgs());
         //}
+        public ICommand SupprimerPersonnageCommand
+        {
+            get
+            {
+                if (supprimerPersonnageCommand == null)
+                {
+                    supprimerPersonnageCommand = new RelayCommand(SupprimerPersonnage, CanSupprimerPersonnage);
+                }
+
+                return supprimerPersonnageCommand;
+            }
+        }
+
+        private bool CanSupprimerPersonnage(object o)
+        {
+            foreach (KeyValuePair<string, string> error in errorList)
+            {
+                if (error.Value != "")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void SupprimerPersonnage(object o)
+        {
+            using(Labo5DbContext db = new Labo5DbContext()){
+                db.Entry(selectedPersonnage).State = EntityState.Deleted;
+                //AllPersonnages.Remove(selectedPersonnage);
+                db.SaveChanges();
+                
+            }
+            
+            
+            //NotifyPropertyChanged("Attaques");
+        }
+
+        public ICommand ModifierPersonnageCommand
+        {
+            get
+            {
+                if (modifierPersonnageCommand == null)
+                {
+                    modifierPersonnageCommand = new RelayCommand(ModifierPersonnage, CanModifierPersonnage);
+                }
+
+                return modifierPersonnageCommand;
+            }
+        }
+
+        private bool CanModifierPersonnage(object o)
+        {
+            foreach (KeyValuePair<string, string> error in errorList)
+            {
+                if (error.Value != "")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void ModifierPersonnage(object o)
+        {
+
+            PersonnageInfoVM personnageInfoVM;
+
+            using(Labo5DbContext db = new Labo5DbContext())
+            {
+                Personnage personnageModel = db.Personnages.Include("Attaques").Where(p => p.PersonnageID == selectedPersonnage.PersonnageID).FirstOrDefault();
+
+                personnageInfoVM = new PersonnageInfoVM(personnageModel);
+            }
+
+            DetailsPersonnageView detailsPersonnageView = new DetailsPersonnageView(personnageInfoVM);
+
+            if (detailsPersonnageView.ShowDialog() == true)
+            {
+                MessageBox.Show("VRAI!!");
+            }
+            else
+            {
+                MessageBox.Show("FAUX!!");
+            }
+        }
     }
 }

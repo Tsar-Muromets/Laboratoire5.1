@@ -37,16 +37,28 @@ namespace Laboratoire5._1
             //personnageInfoVM.Dema
         }
 
-        private void Modifier_Click(object sender, RoutedEventArgs e)
-        {
-            DetailsPersonnageView detailsPersonnageView = new DetailsPersonnageView();
-            detailsPersonnageView.ShowDialog();
-        }
+        //private void Modifier_Click(object sender, RoutedEventArgs e)
+        //{
+        //    DetailsPersonnageView detailsPersonnageView = new DetailsPersonnageView();
+        //    detailsPersonnageView.ShowDialog();
+        //}
 
         private void Creer_Click(object sender, RoutedEventArgs e)
         {
             DetailsPersonnageView detailsPersonnageView = new DetailsPersonnageView();
-            detailsPersonnageView.ShowDialog();
+
+            if (detailsPersonnageView.ShowDialog() == true)
+            {
+                MessageBox.Show("VRAI!!");
+                dgPersoStats.UpdateLayout();
+                //dgPersoStats.Items.Refresh();
+                //PersonnageGestionVM viewModel = (PersonnageGestionVM)detailsPersonnageView.DataContext;
+            }
+            else
+            {
+                //dgPersoStats.Items.Refresh();
+                MessageBox.Show("FAUX!!");
+            }
         }
 
         private void Fermeture(object o, EventArgs e)

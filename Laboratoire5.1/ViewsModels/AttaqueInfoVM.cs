@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+
 using System.Windows.Input;
 
 namespace Laboratoire5._1
@@ -22,7 +23,6 @@ namespace Laboratoire5._1
 
         private RelayCommand sauvegarderCommand;
         private RelayCommand ajouterAttaqueCommand;
-
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

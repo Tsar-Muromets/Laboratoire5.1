@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Data.Entity;
 
+
 namespace Laboratoire5._1
 {
     public class PersonnageInfoVM : INotifyPropertyChanged
@@ -24,6 +25,7 @@ namespace Laboratoire5._1
         //private ObservableCollection<GameAttaque> listAttaque;  
 
         private Dictionary<string, string> errorList;
+
 
         private List<Attaque> allAttaques;
         private Attaque selectedAttaque;
@@ -49,10 +51,12 @@ namespace Laboratoire5._1
 
             personnageModel = new Personnage();
 
+
             using (Labo5DbContext db = new Labo5DbContext())
             {
                 AllAttaques = db.Attaques.ToList();
             }
+
         }
 
         public PersonnageInfoVM(Personnage p)
@@ -65,11 +69,13 @@ namespace Laboratoire5._1
 
             personnageModel = p;
 
+        #region Variables
             using (Labo5DbContext db = new Labo5DbContext())
             {
                 AllAttaques = db.Attaques.ToList();
             }
         }
+
 
         public string Nom
         {
@@ -85,6 +91,7 @@ namespace Laboratoire5._1
                 {
                     errorList["Nom"] = "Le Nom ne doit pas etre vide";
                 }
+
                 else if (value.Count() >= 50)
                 {
                     errorList["Nom"] = "Le nom doit etre plus court que 50 character";
@@ -177,6 +184,8 @@ namespace Laboratoire5._1
                 NotifyPropertyChanged();
             }
         }
+        #endregion
+
 
         public ICollection<Attaque> Attaques
         {
@@ -223,10 +232,10 @@ namespace Laboratoire5._1
                     sauvegarderCommand = new RelayCommand(Sauvegarder, CanSauvegarder);
                 }
 
+
                 return sauvegarderCommand;
             }
         }
-
         private bool CanSauvegarder(object o)
         {
             foreach (KeyValuePair<string, string> error in errorList)

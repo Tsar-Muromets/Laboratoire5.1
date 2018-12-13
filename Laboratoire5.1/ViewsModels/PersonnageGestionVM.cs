@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Laboratoire5._1
         private RelayCommand creerPersonnageCommand;
 
         public event EventHandler DemandeFermeture;
+
 
         public ObservableCollection<PersonnageInfoVM> PersonnageInfoList
         {
@@ -124,5 +126,6 @@ namespace Laboratoire5._1
 
         //    DemandeFermeture?.Invoke(this, new EventArgs());
         //}
+
     }
 }

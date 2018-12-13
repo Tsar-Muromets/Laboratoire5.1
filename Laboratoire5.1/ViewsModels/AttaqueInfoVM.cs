@@ -66,7 +66,7 @@ namespace Laboratoire5._1
             }
         }
 
-        public int Dommage
+        public int Degats
         {
             get
             {

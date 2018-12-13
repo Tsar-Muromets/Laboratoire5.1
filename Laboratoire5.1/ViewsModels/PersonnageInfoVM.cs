@@ -204,15 +204,18 @@ namespace Laboratoire5._1
             return true;
         }
 
-        public ICommand ModifierCommand
-        {
-            get
-            {
-                if(modifierCommand == null)
-                {
-                    modifierCommand = new r
-                }
-            }
-        }
+        //public ICommand ModifierCommand
+        //{
+        //    get
+        //    {
+        //        if(modifierCommand == null)
+        //        {
+        //            modifierCommand = new RelayCommand(Modifier, CanModifier);
+        //        }
+        //        return modifierCommand;
+        //    }
+        //}
+
+        //private void Modifier(object o)
     }
 }

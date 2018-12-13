@@ -66,5 +66,24 @@ namespace Laboratoire5._1
             this.DialogResult = true;
             this.Close();
         }
+
+        private void Fermeture(object o, EventArgs e)
+        {
+            this.DialogResult = true;
+            this.Close();
+        }
+
+        private void PersoStats_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(dgPersoStats.SelectedItems == null)
+            {
+                btnModifier.IsEnabled = false;
+                btnSupprimer.IsEnabled = false;
+            }else
+            {
+                btnModifier.IsEnabled = true;
+                btnSupprimer.IsEnabled = true;
+            }
+        }
     }
 }

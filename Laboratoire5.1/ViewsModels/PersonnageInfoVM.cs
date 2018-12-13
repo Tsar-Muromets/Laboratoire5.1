@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Data.Entity;
 
+
 namespace Laboratoire5._1
 {
     public class PersonnageInfoVM : INotifyPropertyChanged
@@ -25,19 +26,15 @@ namespace Laboratoire5._1
 
         private Dictionary<string, string> errorList;
 
+
         private List<Attaque> allAttaques;
         private Attaque selectedAttaque;
-        private Attaque selectedPersonnageAttaque;
-        //private ObservableCollection<AttaqueInfoVM> personnageAttaques;
-        //private AttaqueInfoVM selectedPersonnageAttaque;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public event EventHandler DemandeFermeture;
 
         private RelayCommand sauvegarderCommand;
-        private RelayCommand ajouterAttaqueCommand;
-        private RelayCommand supprimerAttaqueCommand;
 
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -46,8 +43,6 @@ namespace Laboratoire5._1
 
         public PersonnageInfoVM()
         {
-            //personnageAttaques = new ObservableCollection<AttaqueInfoVM>();
-
             errorList = new Dictionary<string, string>();
             errorList["Nom"] = "";
             errorList["PointsDeVie"] = "";
@@ -55,20 +50,17 @@ namespace Laboratoire5._1
             errorList["Image"] = "";
 
             personnageModel = new Personnage();
-            personnageModel.ImagePath = "/Content/Images/PersonnageDefaut.png";
+
 
             using (Labo5DbContext db = new Labo5DbContext())
             {
                 AllAttaques = db.Attaques.ToList();
-
-                SelectedAttaque = db.Attaques.FirstOrDefault();
             }
+
         }
 
         public PersonnageInfoVM(Personnage p)
         {
-            //personnageAttaques = new ObservableCollection<AttaqueInfoVM>();
-
             errorList = new Dictionary<string, string>();
             errorList["Nom"] = "";
             errorList["PointsDeVie"] = "";
@@ -77,12 +69,13 @@ namespace Laboratoire5._1
 
             personnageModel = p;
 
+        #region Variables
             using (Labo5DbContext db = new Labo5DbContext())
             {
                 AllAttaques = db.Attaques.ToList();
-                SelectedAttaque = db.Attaques.FirstOrDefault();
             }
         }
+
 
         public string Nom
         {
@@ -98,6 +91,7 @@ namespace Laboratoire5._1
                 {
                     errorList["Nom"] = "Le Nom ne doit pas etre vide";
                 }
+
                 else if (value.Count() >= 50)
                 {
                     errorList["Nom"] = "Le nom doit etre plus court que 50 character";
@@ -121,31 +115,6 @@ namespace Laboratoire5._1
             set
             {
                 personnageModel.Type = value;
-                NotifyPropertyChanged();
-            }
-        }
-
-        public PersonnageType SelectedType
-        {
-            get
-            {
-                //return (PersonnageType)typeof(PersonnageType).GetEnumValues().GetValue(personnageModel.Type);
-                return (PersonnageType)personnageModel.Type;
-            }
-
-            set
-            {
-                //if (value == PersonnageType.Humain)
-                //{
-                //    personnageModel.Type = 0;
-                //}
-                //else
-                //{
-                //    personnageModel.Type = 1;
-                //}
-
-                personnageModel.Type = (int)value;
-
                 NotifyPropertyChanged();
             }
         }
@@ -182,7 +151,7 @@ namespace Laboratoire5._1
             set
             {
                 personnageModel.ManaTotal = value;
-                if (value < 0 || value >= 200)
+                if (value <= 0 || value >= 200)
                 {
                     errorList["PointDeMana"] = "Les points de mana ne doivent pas etre inferieur a 0 ou supperieur a 200";
                 }
@@ -204,7 +173,7 @@ namespace Laboratoire5._1
             set
             {
                 personnageModel.ImagePath = value;
-                if (value == null)
+                if (value != null)
                 {
                     errorList["Image"] = "Une image est obligatoire";
                 }
@@ -215,8 +184,10 @@ namespace Laboratoire5._1
                 NotifyPropertyChanged();
             }
         }
+        #endregion
 
-        public ObservableCollection<Attaque> Attaques
+
+        public ICollection<Attaque> Attaques
         {
             get
             {
@@ -225,42 +196,6 @@ namespace Laboratoire5._1
             set
             {
                 personnageModel.Attaques = value;
-            }
-        }
-
-        //public ObservableCollection<AttaqueInfoVM> PersonnageAttaques
-        //{
-        //    get
-        //    {
-        //        return personnageAttaques;
-        //    }
-        //    set
-        //    {
-        //        personnageAttaques = value;
-        //    }
-        //}
-
-        public Attaque SelectedAttaque
-        {
-            get
-            {
-                return selectedAttaque;
-            }
-            set
-            {
-                selectedAttaque = value;
-            }
-        }
-
-        public Attaque SelectedPersonnageAttaque
-        {
-            get
-            {
-                return selectedPersonnageAttaque;
-            }
-            set
-            {
-                selectedPersonnageAttaque = value;
             }
         }
 
@@ -276,17 +211,17 @@ namespace Laboratoire5._1
             }
         }
 
-        //public Attaque SelectedAttaque
-        //{
-        //    get
-        //    {
-        //        return selectedAttaque;
-        //    }
-        //    set
-        //    {
-        //        selectedAttaque = value;
-        //    }
-        //}
+        public Attaque SelectedAttaque
+        {
+            get
+            {
+                return selectedAttaque;
+            }
+            set
+            {
+                selectedAttaque = value;
+            }
+        }
 
         public ICommand SauvegarderCommand
         {
@@ -297,10 +232,10 @@ namespace Laboratoire5._1
                     sauvegarderCommand = new RelayCommand(Sauvegarder, CanSauvegarder);
                 }
 
+
                 return sauvegarderCommand;
             }
         }
-
         private bool CanSauvegarder(object o)
         {
             foreach (KeyValuePair<string, string> error in errorList)
@@ -323,8 +258,6 @@ namespace Laboratoire5._1
                 //si egal 0, nouvelle maison
                 if (personnageModel.PersonnageID == 0)
                 {
-                    //personnageModel.
-                    //personnageModel.Type = SelectedType;
                     db.Entry(personnageModel).State = EntityState.Added;
                 }
                 else //si different de 0, maison existante que je modifie
@@ -341,12 +274,12 @@ namespace Laboratoire5._1
         {
             get
             {
-                if (ajouterAttaqueCommand == null)
+                if (sauvegarderCommand == null)
                 {
-                    ajouterAttaqueCommand = new RelayCommand(AjouterAttaque, CanAjouterAttaque);
+                    sauvegarderCommand = new RelayCommand(AjouterAttaque, CanAjouterAttaque);
                 }
 
-                return ajouterAttaqueCommand;
+                return sauvegarderCommand;
             }
         }
 
@@ -365,45 +298,9 @@ namespace Laboratoire5._1
 
         private void AjouterAttaque(object o)
         {
-            //Attaque newPersonnageAttaque = new Attaque();
 
-            //newPersonnageAttaque.Nom = selectedAttaque.Nom;
-            //newPersonnageAttaque.Degats = selectedAttaque.Degats;
-            //newPersonnageAttaque.Mana = selectedAttaque.Mana;
             Attaques.Add(selectedAttaque);
-        }
-
-        public ICommand SupprimerAttaqueCommand
-        {
-            get
-            {
-                if (supprimerAttaqueCommand == null)
-                {
-                    supprimerAttaqueCommand = new RelayCommand(SupprimerAttaque, CanSupprimerAttaque);
-                }
-
-                return supprimerAttaqueCommand;
-            }
-        }
-
-        private bool CanSupprimerAttaque(object o)
-        {
-            foreach (KeyValuePair<string, string> error in errorList)
-            {
-                if (error.Value != "")
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private void SupprimerAttaque(object o)
-        {
-
-            Attaques.Remove(selectedPersonnageAttaque);
-            //NotifyPropertyChanged("Attaques");
+            NotifyPropertyChanged("Attaques");
         }
     }
 }

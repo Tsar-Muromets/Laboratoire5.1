@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+using System.Windows.Input;
+
 namespace Laboratoire5._1
 {
     public class AttaqueInfoVM: INotifyPropertyChanged
@@ -66,7 +68,7 @@ namespace Laboratoire5._1
             }
         }
 
-        public int Dommage
+        public int Degats
         {
             get
             {

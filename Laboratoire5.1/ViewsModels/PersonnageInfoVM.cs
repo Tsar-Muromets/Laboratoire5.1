@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Labo5GameLib;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Data.Entity;
 
 namespace Laboratoire5._1
 {
@@ -22,9 +24,14 @@ namespace Laboratoire5._1
         //private ObservableCollection<GameAttaque> listAttaque;  
 
         private Dictionary<string, string> errorList;
-        private string nom;
+
+        private List<Attaque> allAttaques;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public event EventHandler DemandeFermeture;
+
+        private RelayCommand sauvegarderCommand;
 
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -41,7 +48,10 @@ namespace Laboratoire5._1
 
             personnageModel = new Personnage();
 
-
+            using (Labo5DbContext db = new Labo5DbContext())
+            {
+                AllAttaques = db.Attaques.ToList();
+            }
         }
 
         public PersonnageInfoVM(Personnage p)
@@ -54,6 +64,10 @@ namespace Laboratoire5._1
 
             personnageModel = p;
 
+            using (Labo5DbContext db = new Labo5DbContext())
+            {
+                AllAttaques = db.Attaques.ToList();
+            }
         }
 
         public string Nom
@@ -70,7 +84,7 @@ namespace Laboratoire5._1
                 {
                     errorList["Nom"] = "Le Nom ne doit pas etre vide";
                 }
-                else if (value.Count() <= 50)
+                else if (value.Count() >= 50)
                 {
                     errorList["Nom"] = "Le nom doit etre plus court que 50 character";
                 }
@@ -161,6 +175,78 @@ namespace Laboratoire5._1
                 }
                 NotifyPropertyChanged();
             }
+        }
+
+        public ICollection<Attaque> Attaques
+        {
+            get
+            {
+                return personnageModel.Attaques;
+            }
+            set
+            {
+                personnageModel.Attaques = value;
+            }
+        }
+
+        public List<Attaque> AllAttaques
+        {
+            get
+            {
+                return allAttaques;
+            }
+            set
+            {
+                allAttaques = value;
+            }
+        }
+
+        public ICommand SauvegarderCommand
+        {
+            get
+            {
+                if (sauvegarderCommand == null)
+                {
+                    sauvegarderCommand = new RelayCommand(Sauvegarder, CanSauvegarder);
+                }
+
+                return sauvegarderCommand;
+            }
+        }
+
+        private bool CanSauvegarder(object o)
+        {
+            foreach (KeyValuePair<string, string> error in errorList)
+            {
+                if (error.Value != "")
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void Sauvegarder(object o)
+        {
+            Console.WriteLine("Enregistrer dans la DB.");
+
+            using (Labo5DbContext db = new Labo5DbContext())
+            {
+                //si egal 0, nouvelle maison
+                if (personnageModel.PersonnageID == 0)
+                {
+                    db.Entry(personnageModel).State = EntityState.Added;
+                }
+                else //si different de 0, maison existante que je modifie
+                {
+                    db.Entry(personnageModel).State = EntityState.Modified;
+                }
+
+                db.SaveChanges();
+            }
+
+            DemandeFermeture?.Invoke(this, new EventArgs());
         }
     }
 }

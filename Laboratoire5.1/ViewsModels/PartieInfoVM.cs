@@ -14,9 +14,9 @@ namespace Laboratoire5._1
 
         private Dictionary<string, string> errorList;
 
-        private RelayCommand changerCommand;
-        private RelayCommand sauvegarderCommand;
-        private RelayCommand supprimerCommand;
+        //private RelayCommand changerCommand;
+        //private RelayCommand sauvegarderCommand;
+        //private RelayCommand supprimerCommand;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

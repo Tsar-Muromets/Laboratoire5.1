@@ -8,33 +8,33 @@
         Title="Details du personnage" Height="400" Width="400">
     <Grid>
         <Label x:Name="lblNom" Content="Nom:" HorizontalAlignment="Left" Margin="158,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="81"/>
-        <TextBox x:Name="txtNom" HorizontalAlignment="Left" Height="26" Margin="244,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtNom" HorizontalAlignment="Left" Height="26" Margin="244,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" VerticalContentAlignment="Center" Text="{Binding Nom}"/>
         <Label x:Name="lblType" Content="Type: " HorizontalAlignment="Left" Margin="158,41,0,0" VerticalAlignment="Top" Width="81" HorizontalContentAlignment="Right"/>
         <ComboBox x:Name="cbType" HorizontalAlignment="Left" Margin="244,41,0,0" VerticalAlignment="Top" Width="140" Height="26" ItemsSource="{Binding Source={StaticResource enmPersonnageType}}" SelectedValue="{Binding TypeSelection}"/>
         <Label x:Name="lblVie" Content="Vie: " HorizontalAlignment="Left" Margin="158,72,0,0" VerticalAlignment="Top" Width="81" HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="txtVie" HorizontalAlignment="Left" Height="26" Margin="244,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtVie" HorizontalAlignment="Left" Height="26" Margin="244,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" VerticalContentAlignment="Center" Text="{Binding VieTotal}"/>
         <Label x:Name="lblMana" Content="Mana: " HorizontalAlignment="Left" Margin="158,103,0,0" VerticalAlignment="Top" Width="81" HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="txtMana" HorizontalAlignment="Left" Height="26" Margin="244,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtMana" HorizontalAlignment="Left" Height="26" Margin="244,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" VerticalContentAlignment="Center" Text="{Binding ManaTotal}"/>
         <Image x:Name="image" HorizontalAlignment="Left" Height="119" Margin="10,10,0,0" VerticalAlignment="Top" Width="119"/>
-        <ComboBox x:Name="cbAttaques" HorizontalAlignment="Left" Margin="9,134,0,0" VerticalAlignment="Top" Width="183"/>
+        <ComboBox x:Name="cbAttaques" HorizontalAlignment="Left" Margin="9,134,0,0" VerticalAlignment="Top" Width="183" ItemsSource="{Binding AllAttaques}"/>
         <Button x:Name="btnAjouter" Content="Ajouter" HorizontalAlignment="Left" Margin="215,134,0,0" VerticalAlignment="Top" Width="74" Height="23"/>
         <Button x:Name="btnSupprimer" Content="Supprimer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="309,134,0,0" Height="23"/>
-        <DataGrid Margin="9,162,9.6,34.4">
+        <DataGrid Margin="9,162,9.6,34.4" ItemsSource="{Binding Attaques}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nom" Width="1*"/>
-                <DataGridTextColumn Header="Dommage" Width="1*"/>
-                <DataGridTextColumn Header="Mana" Width="1*"/>
+                <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="1*"/>
+                <DataGridTextColumn Header="Dommage" Binding="{Binding Dommage}" Width="1*"/>
+                <DataGridTextColumn Header="Mana" Binding="{Binding Mana}" Width="1*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnSauvgarder" Content="Sauvgarder" HorizontalAlignment="Left" Margin="214,341,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="btnAnnuler" Content="Annuler" HorizontalAlignment="Left" Margin="309,341,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnSauvgarder" Content="Sauvgarder" HorizontalAlignment="Left" Margin="214,341,0,0" VerticalAlignment="Top" Width="75" Command="{Binding SauvegarderCommand}"/>
+        <Button x:Name="btnAnnuler" Content="Annuler" HorizontalAlignment="Left" Margin="309,341,0,0" VerticalAlignment="Top" Width="75" Click="Annuler_Click"/>
 
     </Grid>
     <Window.Resources>
         <Style TargetType="TextBox">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)}" />
                 </Trigger>
             </Style.Triggers>
         </Style>

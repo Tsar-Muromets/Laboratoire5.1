@@ -22,6 +22,8 @@ namespace Laboratoire5._1
         public GestionAttaquesView()
         {
             InitializeComponent();
+            AttaqueGestionVM attaqueGestionVM = new AttaqueGestionVM();
+            this.DataContext = attaqueGestionVM;
         }
 
         private void Creer_Click(object sender, RoutedEventArgs e)
@@ -34,6 +36,20 @@ namespace Laboratoire5._1
         {
             DetailsAttaqueView detailsAttaqueView = new DetailsAttaqueView();
             detailsAttaqueView.ShowDialog();
+        }
+
+        private void AttaqueStats_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dgAttaqueStats.SelectedItems == null)
+            {
+                btnModifier.IsEnabled = false;
+                btnSupprimer.IsEnabled = false;
+            }
+            else
+            {
+                btnModifier.IsEnabled = true;
+                btnSupprimer.IsEnabled = true;
+            }
         }
     }
 }

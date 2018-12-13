@@ -7,15 +7,15 @@
         mc:Ignorable="d"
         Title="Gestion des attaques" Height="300" Width="300">
     <Grid>
-        <DataGrid Margin="0,0,-0.4,38.4">
+        <DataGrid Name="dgAttaqueStats" AutoGenerateColumns="False" SelectionMode ="Single" ItemsSource="{Binding AttaqueInfoList}" Margin="0,0,-0.4,38.4" SelectionChanged="AttaqueStats_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nom" Width="1*"/>
-                <DataGridTextColumn Header="Dommage" Width="1*"/>
-                <DataGridTextColumn Header="Mana" Width="1*"/>
+                <DataGridTextColumn Header="Nom" Width="1*" Binding="{Binding Nom}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Dommage" Width="1*" Binding="{Binding Degats}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Mana" Width="1*" Binding="{Binding Mana}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btnCreer" Content="Creer" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="75" Click="Creer_Click"/>
-        <Button x:Name="btnModifier" Content="Modifier" HorizontalAlignment="Left" Margin="110,241,0,0" VerticalAlignment="Top" Width="75" Click="Modifier_Click"/>
-        <Button x:Name="btnSupprimer" Content="Supprimer" HorizontalAlignment="Left" Margin="209,241,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnModifier" Content="Modifier" HorizontalAlignment="Left" Margin="110,241,0,0" VerticalAlignment="Top" Width="75" Click="Modifier_Click" IsEnabled="False"/>
+        <Button x:Name="btnSupprimer" Content="Supprimer" HorizontalAlignment="Left" Margin="209,241,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False"/>
     </Grid>
 </Window>

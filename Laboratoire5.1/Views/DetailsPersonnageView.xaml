@@ -26,7 +26,7 @@
                 <DataGridTextColumn Header="Mana" Width="1*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnSauvgarder" Content="Sauvgarder" HorizontalAlignment="Left" Margin="214,341,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnSauvgarder" Content="Sauvgarder" HorizontalAlignment="Left" Margin="214,341,0,0" VerticalAlignment="Top" Width="75" Command="{Binding SauvegarderCommand}"/>
         <Button x:Name="btnAnnuler" Content="Annuler" HorizontalAlignment="Left" Margin="309,341,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>

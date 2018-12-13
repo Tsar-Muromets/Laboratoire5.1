@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Labo5GameLib;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Laboratoire5._1
 {
@@ -22,7 +23,9 @@ namespace Laboratoire5._1
         //private ObservableCollection<GameAttaque> listAttaque;  
 
         private Dictionary<string, string> errorList;
-        private string nom;
+
+        private RelayCommand sauvegarderCommand;
+        private RelayCommand modifierCommand;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -56,6 +59,7 @@ namespace Laboratoire5._1
 
         }
 
+        #region Variables
         public string Nom
         {
             get
@@ -160,6 +164,54 @@ namespace Laboratoire5._1
                     errorList["Image"] = "";
                 }
                 NotifyPropertyChanged();
+            }
+        }
+        #endregion
+
+        public ICommand SauvegarderCommand
+        {
+            get
+            {
+                if(sauvegarderCommand == null)
+                {
+                    sauvegarderCommand = new RelayCommand(Sauvegarder, CanSauvegarder);
+                }
+                return sauvegarderCommand;
+            }
+        }
+
+        private void Sauvegarder(object o)
+        {
+            using(Labo5DbContext db = new Labo5DbContext())
+            {
+                if(personnageModel.PersonnageID == 0)
+                {
+                    db.Personnages.Add(personnageModel);
+                }
+                db.SaveChanges();
+            }
+        }
+
+        private bool CanSauvegarder(object o)
+        {
+            foreach (KeyValuePair<string, string> error in errorList)
+            {
+                if(error.Value != "")
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public ICommand ModifierCommand
+        {
+            get
+            {
+                if(modifierCommand == null)
+                {
+                    modifierCommand = new r
+                }
             }
         }
     }

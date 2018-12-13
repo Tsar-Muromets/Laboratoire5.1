@@ -22,6 +22,30 @@ namespace Laboratoire5._1
         public DetailsPersonnageView()
         {
             InitializeComponent();
+
+            PersonnageInfoVM personnageInfoVM = new PersonnageInfoVM();
+            this.DataContext = personnageInfoVM;
+            personnageInfoVM.DemandeFermeture += Fermeture;
+        }
+
+        public DetailsPersonnageView(PersonnageInfoVM pVM)
+        {
+            InitializeComponent();
+
+            this.DataContext = pVM;
+            pVM.DemandeFermeture += Fermeture;
+        }
+
+        private void Annuler_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
+        }
+
+        private void Fermeture(object o, EventArgs e)
+        {
+            this.DialogResult = true;
+            this.Close();
         }
     }
 }

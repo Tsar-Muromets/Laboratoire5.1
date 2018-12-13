@@ -7,16 +7,16 @@
         mc:Ignorable="d"
         Title="Gestion des personnages" Height="400" Width="500">
     <Grid>
-        <DataGrid Name="dgPersoStats" Margin="0,0,-0.4,34.4">
+        <DataGrid Name="dgPersoStats" AutoGenerateColumns="False" Margin="0,0,-0.4,34.4" SelectionMode="Single" ItemsSource="{Binding PersonnageInfoList}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nom" Width="1*"/>
-                <DataGridTextColumn Header="Type" Width="1*"/>
-                <DataGridTextColumn Header="Vie" Width="1*"/>
-                <DataGridTextColumn Header="Mana" Width="1*"/>
+                <DataGridTextColumn Header="Nom" Width="1*" IsReadOnly="True" Binding="{Binding Nom}"/>
+                <DataGridTextColumn Header="Type" Width="1*" IsReadOnly="True" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Vie" Width="1*" IsReadOnly="True" Binding="{Binding VieTotal}"/>
+                <DataGridTextColumn Header="Mana" Width="1*" IsReadOnly="True" Binding="{Binding ManaTotal}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnSupprimer" Content="Supprimer" HorizontalAlignment="Left" Margin="409,341,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="btnModifier" Content="Modifier" HorizontalAlignment="Left" Margin="329,341,0,0" VerticalAlignment="Top" Width="75" Command = "{Binding ModifierCommand}" Click="Modifier_Click"/>
-        <Button x:Name="btnCreer" Content="Creer" HorizontalAlignment="Left" Margin="249,341,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CreerCommand}" Click="Creer_Click"/>
+        <Button x:Name="btnSupprimer" Content="Supprimer" HorizontalAlignment="Left" Margin="409,341,0,0" VerticalAlignment="Top" Width="75" Command = "{Binding ModifierCommand}"/>
+        <Button x:Name="btnModifier" Content="Modifier" HorizontalAlignment="Left" Margin="329,341,0,0" VerticalAlignment="Top" Width="75" Command = "{Binding ModifierCommand}"/>
+        <Button x:Name="btnCreer" Content="Creer" HorizontalAlignment="Left" Margin="249,341,0,0" VerticalAlignment="Top" Width="75" Click="Creer_Click"/>
     </Grid>
 </Window>

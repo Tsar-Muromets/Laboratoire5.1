@@ -8,19 +8,19 @@
         Title="Details de l'attaque" Height="166.782" Width="300">
     <Grid>
         <Label x:Name="lblNom" Content="Nom: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="80" HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="txtNom" HorizontalAlignment="Left" Height="26" Margin="95,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="189" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtNom" Text="{Binding Nom}" HorizontalAlignment="Left" Height="26" Margin="95,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="189" VerticalContentAlignment="Center"/>
         <Label x:Name="lblDommage" Content="Dommage: " HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="80" HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="txtDommage" HorizontalAlignment="Left" Height="26" Margin="95,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtDommage" Text="{Binding Dommage}" HorizontalAlignment="Left" Height="26" Margin="95,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" VerticalContentAlignment="Center"/>
         <Label x:Name="lblMana" Content="Mana: " HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" Width="79" HorizontalContentAlignment="Right"/>
-        <TextBox x:Name="txtMana" HorizontalAlignment="Left" Height="26" Margin="95,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" VerticalContentAlignment="Center"/>
-        <Button x:Name="btnAnnuler" Content="Annuler" HorizontalAlignment="Left" Margin="208,103,0,0" VerticalAlignment="Top" Width="75" Height="24"/>
-        <Button x:Name="btnSauvgarder" Content="Sauvgarder" HorizontalAlignment="Left" Margin="128,105,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+        <TextBox x:Name="txtMana" Text="{Binding Mana}" HorizontalAlignment="Left" Height="26" Margin="95,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" VerticalContentAlignment="Center"/>
+        <Button x:Name="btnAnnuler" Content="Annuler" HorizontalAlignment="Left" Margin="208,103,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="Annuler_Click"/>
+        <Button x:Name="btnSauvegarder" Content="Sauvegarder" HorizontalAlignment="Left" Margin="128,105,0,0" VerticalAlignment="Top" Width="75" Height="22" Command="{Binding SauvegarderCommand}"/>
     </Grid>
     <Window.Resources>
         <Style TargetType="TextBox">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)}" />
                 </Trigger>
             </Style.Triggers>
         </Style>

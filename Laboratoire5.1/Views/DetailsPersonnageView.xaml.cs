@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +48,14 @@ namespace Laboratoire5._1
         {
             this.DialogResult = true;
             this.Close();
+        }
+        private void LeftClick_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.FileOk += new CancelEventHandler((object obj, CancelEventArgs args) => {
+                ((PersonnageInfoVM)this.DataContext).ImagePath = ((OpenFileDialog)obj).FileName;
+            });
+            fileDialog.ShowDialog();
         }
     }
 }

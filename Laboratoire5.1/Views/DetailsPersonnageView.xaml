@@ -10,7 +10,7 @@
         <Label x:Name="lblNom" Content="Nom:" HorizontalAlignment="Left" Margin="158,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="81"/>
         <TextBox x:Name="txtNom" HorizontalAlignment="Left" Height="26" Margin="244,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" VerticalContentAlignment="Center" Text="{Binding Nom}"/>
         <Label x:Name="lblType" Content="Type: " HorizontalAlignment="Left" Margin="158,41,0,0" VerticalAlignment="Top" Width="81" HorizontalContentAlignment="Right"/>
-        <ComboBox x:Name="cbType" HorizontalAlignment="Left" Margin="244,41,0,0" VerticalAlignment="Top" Width="140" Height="26" ItemsSource="{Binding Source={StaticResource enmPersonnageType}}" SelectedValue="{Binding TypeSelection}"/>
+        <ComboBox x:Name="cbType" HorizontalAlignment="Left" Margin="244,41,0,0" VerticalAlignment="Top" Width="140" Height="26" ItemsSource="{Binding Source={StaticResource enmPersonnageType}}" SelectedValue="{Binding SelectedType}"/>
         <Label x:Name="lblVie" Content="Vie: " HorizontalAlignment="Left" Margin="158,72,0,0" VerticalAlignment="Top" Width="81" HorizontalContentAlignment="Right"/>
         <TextBox x:Name="txtVie" HorizontalAlignment="Left" Height="26" Margin="244,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" VerticalContentAlignment="Center" Text="{Binding VieTotal}"/>
         <Label x:Name="lblMana" Content="Mana: " HorizontalAlignment="Left" Margin="158,103,0,0" VerticalAlignment="Top" Width="81" HorizontalContentAlignment="Right"/>
@@ -18,11 +18,12 @@
         <Image x:Name="image" HorizontalAlignment="Left" Height="119" Margin="10,10,0,0" VerticalAlignment="Top" Width="119"/>
         <ComboBox x:Name="cbAttaques" HorizontalAlignment="Left" Margin="9,134,0,0" VerticalAlignment="Top" Width="183" ItemsSource="{Binding AllAttaques}" SelectedItem="{Binding SelectedAttaque}" DisplayMemberPath="Nom"/>
         <Button x:Name="btnAjouter" Content="Ajouter" HorizontalAlignment="Left" Margin="215,134,0,0" VerticalAlignment="Top" Width="74" Height="23" Command="{Binding AjouterAttaqueCommand}"/>
-        <Button x:Name="btnSupprimer" Content="Supprimer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="309,134,0,0" Height="23"/>
-        <DataGrid Margin="9,162,9.6,34.4" ItemsSource="{Binding Attaques}">
+        <Button x:Name="btnSupprimer" Content="Supprimer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="309,134,0,0" Height="23" Command="{Binding SupprimerAttaqueCommand}"/>
+        <Image x:Name="imgPerso"  HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="137" Source="{Binding ImagePath}" PreviewMouseDown="LeftClick_PreviewMouseDown"/>
+        <DataGrid Margin="9,162,9.6,34.4" ItemsSource="{Binding Attaques}" IsReadOnly="True" SelectedItem="{Binding SelectedPersonnageAttaque}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nom" Binding="{Binding Nom}" Width="1*"/>
-                <DataGridTextColumn Header="Dommage" Binding="{Binding Dommage}" Width="1*"/>
+                <DataGridTextColumn Header="Dommage" Binding="{Binding Degats}" Width="1*"/>
                 <DataGridTextColumn Header="Mana" Binding="{Binding Mana}" Width="1*"/>
             </DataGrid.Columns>
         </DataGrid>

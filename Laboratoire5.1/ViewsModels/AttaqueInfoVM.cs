@@ -43,7 +43,7 @@ namespace Laboratoire5._1
 
             attaqueModel = a;
         }
-
+        
         public string Nom
         {
             get

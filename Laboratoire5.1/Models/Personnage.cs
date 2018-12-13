@@ -2,6 +2,7 @@ namespace Laboratoire5._1
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -12,7 +13,7 @@ namespace Laboratoire5._1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Personnage()
         {
-            Attaques = new HashSet<Attaque>();
+            Attaques = new ObservableCollection<Attaque>();
             Parties = new HashSet<Partie>();
         }
 
@@ -33,7 +34,7 @@ namespace Laboratoire5._1
         public string ImagePath { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Attaque> Attaques { get; set; }
+        public virtual ObservableCollection<Attaque> Attaques { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Partie> Parties { get; set; }
